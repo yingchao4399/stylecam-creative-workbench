@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'" />
+  <title>StyleCam 创作工作台</title>
+  <link rel="icon" href="assets/icon/stylecam.png" />
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><img class="brand-icon" src="assets/icon/stylecam-mark.svg" alt="StyleCam 图标" /><div><strong>StyleCam</strong><small>创作工作台 / LESSON 06</small></div></div>
+      <div class="topbar-center"><span class="eyebrow">当前场景</span><span class="scene-pill"><span class="live-dot"></span> <span id="sceneLabel">风格创作</span></span><span class="topbar-divider"></span><span id="topHint">旋钮正在选择风格</span></div>
+      <div class="topbar-actions"><span id="providerPill" class="provider-pill">样片演示</span><button id="deviceButton" class="device-button" type="button">⌨ 设备输入</button><button id="settingsButton" class="device-button" type="button">⚙ 设置</button><button id="helpButton" class="icon-button" type="button" title="查看操作说明" aria-label="查看操作说明">?</button></div>
+    </header>
+
+    <main class="main-area">
+      <aside class="source-panel panel">
+        <div class="panel-heading"><span class="eyebrow">01 / INPUT</span><h2>素材架</h2><p>把你想改造的画面放进来。</p></div>
+        <div id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="拖入或选择图片">
+          <div class="drop-icon">↥</div><strong>拖入图片</strong><span>或点击选择 PNG / JPG / WebP</span>
+          <input id="sourceFile" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+        </div>
+        <button id="demoSourceButton" class="text-button" type="button">使用原创示例素材 <span>↗</span></button>
+        <div class="source-preview"><div class="preview-header"><span>当前素材</span><span id="sourceBadge" class="tiny-badge">未装载</span></div><div id="sourceImageWrap" class="source-image-wrap"><img id="sourceImage" src="assets/styles/source-robot.png" alt="当前素材预览" /></div><strong id="sourceName">等待装载</strong><small id="sourceDescription">导入后可选择风格并生成。</small></div>
+        <div class="source-footnote">素材默认保存在本机。只有选择实时 AI 生成时，当前素材才会发给所配置的图像服务。</div>
+      </aside>
+
+      <section class="creation-panel panel" aria-label="风格创作区">
+        <div class="creation-heading"><div><span class="eyebrow">02 / TRANSFORM</span><h1>让画面换一种质地<span>。</span></h1></div><span id="phaseTag" class="phase-tag">准备就绪</span></div>
+        <div id="machine" class="machine" tabindex="0" aria-label="创作机器，旋钮滚轮可选择风格">
+          <div class="machine-top"><span>STYLECAM / TRANSFORM ENGINE</span><span id="machineIndex">01 — 03</span></div>
+          <div id="machineImageFrame" class="machine-image-frame"><img id="stageImage" src="assets/styles/wool.png" alt="当前风格预览" /><div id="stageOverlay" class="stage-overlay" hidden><span class="spinner"></span><strong>正在生成新画面</strong><small>模型处理期间不会重复提交</small></div><span id="previewStamp" class="preview-stamp">风格样片预览 · 尚未生成</span></div>
+          <div class="machine-bottom"><div class="knob-visual" aria-hidden="true"><i></i></div><div class="knob-copy"><span>旋钮当前操作</span><strong id="knobAction">旋转选风格</strong><small id="knobNext">按下旋钮 → 生成图片</small></div><button id="generateButton" type="button" class="generate-button"><span class="generate-icon">●</span><span id="generateLabel">生成作品</span></button></div>
+        </div>
+        <div class="style-section"><div class="section-title"><div><span class="eyebrow">PERSONAL STYLE SET</span><h2>我的风格组</h2></div><span class="section-meta">同一主体 · 三种语言</span></div><div id="styleRail" class="style-rail" role="listbox" aria-label="选择风格"></div></div>
+      </section>
+
+      <aside class="controls-panel panel">
+        <div class="panel-heading"><span class="eyebrow">03 / CONTROL</span><h2>控制台</h2><p>每一次旋转都有清晰的含义。</p></div>
+        <div class="control-card intensity-card"><div class="control-head"><span>创意强度</span><strong id="intensityValue">60%</strong></div><input id="intensitySlider" type="range" min="0" max="4" step="1" value="2" aria-label="创意强度" /><div class="range-labels"><span>保留主体</span><span>重组场景</span></div><p>影响提示词的改造幅度，模型结果不保证线性变化。</p></div>
+        <div class="control-card"><label for="noteInput">补充灵感 <span>可选</span></label><textarea id="noteInput" rows="3" maxlength="500" placeholder="例如：把光线改成窗边的下午…"></textarea><button id="inspirationButton" class="mini-button" type="button">✦ 给我一点灵感</button></div>
+        <div class="control-card mode-card"><div><strong>输出方式</strong><span id="modeDescription">基于样片演示；有服务密钥时可切换实时 AI。</span></div><div class="segmented" role="group" aria-label="输出方式"><button id="demoModeButton" type="button" aria-pressed="true">演示</button><button id="liveModeButton" type="button" aria-pressed="false">实时 AI</button></div></div>
+        <div class="hardware-card"><div class="hardware-title"><span class="eyebrow">EASYINPUT MAPPING</span><strong>8 键 · 1 旋钮</strong></div><div id="keyGrid" class="key-grid"></div><p>兼容数字 1–8、F1–F8 和第五课组合键。滚轮仅在画面区生效；输入文字时快捷键暂停。</p></div>
+      </aside>
+    </main>
+
+    <section class="gallery-panel"><div class="gallery-title"><div><span class="eyebrow">04 / OUTPUT</span><h2>作品桌面 <span id="workCount">0</span></h2></div><span>保存与收起分开；历史作品留在这里。</span></div><div id="gallery" class="gallery"></div></section>
+    <footer class="statusbar"><span class="status-light"></span><span id="statusText" role="status" aria-live="polite">正在准备工作台…</span><span id="inputMonitor">输入：等待操作</span></footer>
+  </div>
+
+  <div id="viewer" class="viewer" hidden><div class="viewer-dialog" role="dialog" aria-modal="true" aria-label="查看作品"><div class="viewer-header"><div><span class="eyebrow">OUTPUT / INSPECT</span><strong id="viewerTitle">查看作品</strong></div><button id="viewerClose" class="icon-button" type="button" aria-label="关闭查看">×</button></div><div class="viewer-image-wrap"><img id="viewerImage" alt="作品大图" /><span id="viewerStamp">生成结果</span></div><div class="viewer-actions"><button id="compareButton" type="button">S5 原图对比</button><button id="saveButton" class="primary-small" type="button">S3 保存到文件</button><button id="foldButton" type="button">S4 收起</button></div></div></div>
+  <div id="helpDialog" class="help-dialog" hidden><div class="help-card" role="dialog" aria-modal="true" aria-label="操作说明"><button id="helpClose" class="icon-button" type="button" aria-label="关闭说明">×</button><span class="eyebrow">QUICK START</span><h2>旋钮探索，按键行动。</h2><ol><li>导入图片，或使用内置机器人示例。</li><li>在中间画面上转动旋钮，或按方向键切换风格。</li><li>按 S1 调强度，转动旋钮改档位，再按下确认。</li><li>再次按下旋钮生成。演示与实时 AI 会清晰标注。</li><li>用 S2 查看、S5 对比、S3 保存、S4 收起。</li></ol><p>实体板按键值先以工作台底栏的输入显示核对。复读机与 StyleCam 可使用同一套设备配置，由当前聚焦的应用解释动作。</p></div></div>
+  <div id="deviceDialog" class="help-dialog" hidden><div class="help-card device-card" role="dialog" aria-modal="true" aria-label="设备输入诊断"><button id="deviceClose" class="icon-button" type="button" aria-label="关闭设备诊断">×</button><span class="eyebrow">INPUT / DIAGNOSTICS</span><h2>同一块键盘，不同场景。</h2><p>映射只保存在这台电脑的工作台中，不改 EasyInput 固件或设备配置。切到第五课复读机后，焦点由复读机接收；回到这里由 StyleCam 解释。</p><div class="device-profiles" role="group" aria-label="选择输入映射"><button type="button" data-profile="auto">自动识别</button><button type="button" data-profile="course">课堂映射</button><button type="button" data-profile="repeater">第五课映射</button></div><p id="profileDescription">同时识别课堂数字键与第五课组合键。</p><div class="device-state"><strong>当前场景</strong><span id="deviceScene">风格创作</span></div><div class="calibration-box"><strong>实体键校准</strong><div class="calibration-row"><select id="calibrationTarget" aria-label="要校准的动作"><option value="">选择目标动作</option><option value="button-1">S1 · 强度</option><option value="button-2">S2 · 查看</option><option value="button-3">S3 · 保存</option><option value="button-4">S4 · 收起</option><option value="button-5">S5 · 对比</option><option value="button-6">S6 · 灵感</option><option value="button-7">S7 · 重置</option><option value="button-8">S8 · 模式</option><option value="knob-press">旋钮短按 · 确认/生成</option></select><button id="calibrationStart" type="button">开始校准</button></div><p id="calibrationStatus" class="calibration-status">尚未配置自定义绑定。</p><button id="calibrationClear" class="calibration-clear" type="button">清除自定义绑定</button></div><div class="device-log-heading"><strong>最近键值</strong><small>在窗口中按实体键进行核对</small></div><ol id="deviceLog" class="device-log"><li>等待输入…</li></ol><p class="device-note">输入框、弹窗和窗口失焦时创作动作暂停。设备诊断仍会显示所按键值，便于确认配置。</p></div></div>
+  <div id="settingsDialog" class="help-dialog" hidden><div class="help-card settings-card" role="dialog" aria-modal="true" aria-label="模型服务设置"><button id="settingsClose" class="icon-button" type="button" aria-label="关闭设置">×</button><span class="eyebrow">MODEL / CONNECTION</span><h2>连接图像大模型。</h2><p>选择服务商，填写 API Key，并选择图片模型。千问图像接口需要百炼工作空间专属 Base URL；文本模型（如 qwen-plus）不能生成图片。Codex CLI 仅用于开发测试。</p><form id="settingsForm" class="settings-form"><label>服务商<select id="settingsProvider"><option value="openai">OpenAI 官方</option><option value="qwen">阿里云百炼 / 千问</option><option value="doubao">火山引擎 / 豆包</option><option value="kimi">Moonshot / Kimi</option><option value="google">Google Gemini</option><option value="custom">其他 OpenAI 兼容服务</option><option value="codex">Codex CLI（开发测试）</option></select></label><label>兼容模式 Base URL<input id="settingsBase" type="url" placeholder="https://api.openai.com/v1" autocomplete="url" /><small id="settingsProviderHelp" class="settings-help">模型服务地址应与 API Key 所属区域和服务商保持一致。</small></label><label>图像模型<div class="model-picker"><select id="settingsModelSelect" aria-label="选择图像模型"><option value="">先获取模型列表</option></select><button id="settingsModels" type="button">获取官方模型</button></div><input id="settingsModel" type="text" placeholder="也可手动填写模型名" autocomplete="off" /></label><label>API Key<input id="settingsKey" type="password" placeholder="留空表示沿用已保存密钥" autocomplete="new-password" /></label><div class="settings-actions"><button id="settingsTest" type="button">测试连接</button><button id="settingsSave" class="primary-small" type="submit">保存设置</button></div><p id="settingsStatus" class="settings-status" role="status"></p></form></div></div>
+  <script type="module" src="src/renderer.js"></script>
+</body>
+</html>

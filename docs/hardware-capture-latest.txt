@@ -1,0 +1,2 @@
+Capturing EasyInput USB Raw Input for 90 seconds (VID_303A&PID_1006).
+Capture finished: 0 device events.

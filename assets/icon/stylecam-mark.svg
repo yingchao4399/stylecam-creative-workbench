@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="StyleCam 取景框与旋钮图标">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#315748"/><stop offset="1" stop-color="#102a23"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff6de"/><stop offset="1" stop-color="#e4d2b1"/></linearGradient>
+    <linearGradient id="dial" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9e63"/><stop offset="1" stop-color="#e95b3e"/></linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#bg)"/>
+  <rect x="33" y="33" width="446" height="446" rx="96" fill="none" stroke="#7f9c85" stroke-width="7" opacity=".58"/>
+  <path d="M104 126c0-15 12-27 27-27h250c15 0 27 12 27 27v224c0 15-12 27-27 27H131c-15 0-27-12-27-27V126Z" fill="url(#paper)"/>
+  <rect x="125" y="121" width="262" height="214" rx="9" fill="#749c83"/>
+  <path d="M125 285c48-71 77-91 113-57 23 21 45 34 72 18 35-21 53-8 77 16v73H125v-50Z" fill="#315f51"/>
+  <path d="M125 322c39-39 62-49 96-29 39 23 61 17 92-8 26-21 46-21 74-2v52H125v-13Z" fill="#193e35"/>
+  <circle cx="314" cy="178" r="27" fill="#f3bd75"/>
+  <path d="M196 361h112" stroke="#a89677" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="355" cy="355" r="97" fill="#173a31" stroke="#efe4cb" stroke-width="15"/>
+  <circle cx="355" cy="355" r="69" fill="url(#dial)" stroke="#b74b36" stroke-width="6"/>
+  <path d="M355 300v24" stroke="#5b281e" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="355" cy="355" r="28" fill="#f6bc84" opacity=".3"/>
+</svg>
